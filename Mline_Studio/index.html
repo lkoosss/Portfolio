@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Mline Studio | 엠라인스튜디오</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // 기능(1) 시작 - 첫 페이지 로딩시 팝업 화면 출력 & 동작 코드
+            $("#popup h1").delay(1000).fadeIn(4000);
+            $("#popup h2").not("#popup h2:last").delay(3000).fadeIn(2000);
+            $("#popup .enterMainPage").delay(5000).fadeIn();
+            $("#popup").click(function(){
+                $("#popup").fadeOut();
+            })
+            // 기능 (1) 끝 
+
+            // 기능 (2) 시작 = 메인 매뉴탭, 메인 서브탭에 마우스를 올려놓거나 벗어나면 실행되는 코드(서브메뉴 화면표시, 글자색 변경 등)
+            $(".gnb li a").on({
+                "mouseenter":function(){
+                    $(this).css("color","#333").parent("li").siblings().children("a").css("color","");
+                    $(".gnb_sub_menu").css("display","block");
+                },
+                "mouseleave":function(){
+                    $(this).css("color","");
+                }
+            })
+            $(".gnb").mouseleave(function(){
+                $(".gnb_sub_menu").css("display","");
+            })
+            $(".gnb_sub_menu").on({
+                "mouseenter":function(){
+                    $(this).css("display","block");
+                },
+                "mouseleave":function(){
+                    $(this).css("display","");
+                }
+            })
+            // 기능 (2) 끝
+
+            // 기능 (3) 시작 = 메인 배경화면을 3초단위로 변경해주는 코드
+            let mainImgIndex = 2;
+            let mainImgNum = $(".imgbox img").length;
+            let move = setInterval(mainImgChange,3000)
+            function mainImgChange(){
+                $(".imgbox img").eq(mainImgIndex).stop().fadeOut(1000);
+                $(".imgIndexBtn li").eq(mainImgIndex).css("background-color","");
+                mainImgIndex++;
+                if(mainImgIndex == mainImgNum){mainImgIndex = 0;}
+                $(".imgbox img").eq(mainImgIndex).stop().fadeIn(1000);
+                $(".imgIndexBtn li").eq(mainImgIndex).css("background-color","#fff");
+            };
+            // 기능 (3) 끝
+
+            //기능 (4) 시작 = 메인 배경화면을 사용자가 수동으로 변경할 수 있께 해주는 코드
+            $(".imgIndexBtn li").on({
+                mouseenter:function(){
+                    $(this).css({"cursor":"pointer"});
+                },
+                click:function(){                    
+                    if(mainImgIndex == $(this).index()){return;}
+                    mainImgIndex = $(this).index();
+                    clearInterval(move);                    
+                    $(".imgIndexBtn li").css("background-color","");
+                    $(this).css("background-color","#fff");
+                    $(".imgbox img").stop().fadeOut(1000);
+                    $(".imgbox img").eq(mainImgIndex).stop().fadeIn(1000);
+                    move = setInterval(mainImgChange,3000);
+                }
+            })
+            $(".imgIndexBtn li:first").click();
+            // 기능 (4) 끝
+
+            //기능 (5) = 프로덕트의 버튼에 마우스를 올려놓으면 동작
+            $(".product_inform_box a").on({
+                mouseenter:function(){
+                    $(this).css({
+                        backgroundColor:"#444",
+                        border:"3px solid #444",
+                        color:"#fff"
+                    })
+                },
+                mouseleave:function(){
+                    $(this).css({
+                        backgroundColor:"",
+                        border:"",
+                        color:""
+                    })
+                }
+            })
+            //기능 (5) 끝
+
+            //기능 (6) news json을 onepage에 넣기;
+            $.ajax({
+                url:"data/news.json",
+                dataType: "json",
+                success: function(data){
+                    let news_boxs = $(".news_inform>div");
+                    let num = 0;
+                    for(i in data){
+                        let $image_src = data[i].image_src;
+                        let $news_con = data[i].news_con;
+                        let $pub_date = data[i].pub_date;
+                        news_boxs.children("img").eq(num).attr("src","images/"+$image_src);
+                        news_boxs.children(".news_con").eq(num).text($news_con);
+                        news_boxs.children(".pub_date").eq(num).text($pub_date);
+                        num++;
+                    }                    
+                }
+            }) 
+
+            //기능(7) news 이미지에 마우스 올리면 커서변경
+            $(".news_inform>div>img").on({
+                mouseenter:function(){
+                    $(this).css("cursor","pointer");
+                    $(this).css("background-color","#1b1b1b")
+                },
+                mouseleave:function(){
+                    $(this).css("cursor","");
+                }
+            })
+            //기능(7) 끝
+
+            //기능(8) 서브메뉴의 마우스를 올려 놓으면 글자색 변경
+            $(".gnb_sub_menu_list dd a").on({
+                mouseenter:function(){
+                    $(this).css("color","rgb(48,225,216");
+                },
+                mouseleave:function(){
+                    $(this).css("color","");
+                }
+            });
+            // 기능(8) 끝
+
+            // 기능(9) 
+            $("#top_view_btn").on({
+                mouseenter:function(){
+                    $(this).css({
+                        backgroundColor:"rgb(55,55,186)",
+                        border:"none"
+                    });
+                },
+                mouseleave:function(){
+                    $(this).css({
+                        backgroundColor:"",
+                        border:""
+                    })
+                }
+            });
+            // 기능(9)
+            
+            //기능(10)
+            $(".bottom_view_btn").on({
+                mouseenter:function(){
+                    $(this).css({
+                        backgroundColor:"#fff",
+                        border:"1px solid #000",
+                        color:"#000"
+                    });
+                },
+                mouseleave:function(){
+                    $(this).css({
+                        backgroundColor:"",
+                        border:"",
+                        color:""
+                    })
+                }
+            });
+            // 기능(10) 끝
+
+            // 기능(11) 시작
+            $(".follow ul li a").on({
+                mouseenter:function(){
+                    $(this).css({
+                        color:"#fff",
+                        fontSize:"35px",
+                        paddingRight:"35px"
+                    });
+                },
+                mouseleave:function(){
+                    $(this).css({
+                        color:"",
+                        fontSize:"",
+                        paddingRight:""
+                    })
+                }
+            });
+            // 기능(11) 끝
+
+            // 기능(12) 시작
+            $(".download ul li a").on({
+                mouseenter:function(){
+                    $(this).css({
+                        color:"#fff"
+                    })
+                },
+                mouseleave:function(){
+                    $(this).css({
+                        color:""
+                    })
+                }
+            });
+            // 기능(12) 끝
+
+            //기능(14) 시작 - 스크롤을 일정이상 내리면 product 내용이 나타남
+            $(window).scroll(function(){
+                let product01_box_top = 1836;
+                let product02_box_top = 2626;
+                let document_scroll_top = $(document).scrollTop();
+                console.log(product02_box_top,document_scroll_top+1200);
+                if (product01_box_top < document_scroll_top+1000){
+                    $("#product01_img img").animate({"margin-left":0},1500)
+                    $("#product01_desc").animate({"margin-right":0},1500)
+                }
+                if (product02_box_top < document_scroll_top+1100){
+                    $("#product02_img img").animate({"margin-right":0},1500)
+                    $("#product02_desc").animate({"margin-left":0},1500)
+                }
+            })
+            //기능(14) 끝                        
+        })
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="popup">
+            <h1>M-Line Studo One-page Site</h1>
+            <h2>Usging HTML, CSS, jQeury</h2>
+            <h2>Made By Sungsik Oh</h2>
+            <h2 class="enterMainPage">Click Anywhere &gt;</h3>
+        </div>
+        <header>
+            <div class="inner clear">
+                <h1 class="logo">
+                    <a href="#"><img src="images/header_logo.jpg" alt=""></a>
+                </h1>
+                <nav class="clear">
+                    <ul class="gnb">
+                        <li><a href="#">회사소개</a></li>
+                        <li><a href="#">포트폴리오</a></li>
+                        <li><a href="#">품소개</a></li>
+                        <li><a href="#">기술</a></li>
+                        <li><a href="#">뉴스</a></li>
+                        <li><a href="#">견적/문의</a></li>
+                    </ul>
+                    <ul class="gnb_sub_menu">
+                        <li>
+                            <dl class="gnb_sub_menu_list">
+                                <dt>회사소개</dt>
+                                <dd><a href="#">연혁</a></dd>
+                                <dd><a href="#">창립이념</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl class="gnb_sub_menu_list">
+                                <dt>포트폴리오</dt>
+                                <dd><a href="#">VR</a></dd>
+                                <dd><a href="#">AR</a></dd>
+                                <dd><a href="#">MR</a></dd>
+                                <dd><a href="#">체험장 설치</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl class="gnb_sub_menu_list">
+                                <dt>제품소개</dt>
+                                <dd><a href="#">콘텐츠</a></dd>
+                                <dd><a href="#">하드웨어</a></dd>
+                                <dd><a href="#">운영툴</a></dd>
+                                <dd><a href="#">체험장</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl class="gnb_sub_menu_list">
+                                <dt>기술</dt>
+                                <dd><a href="#">네트워크</a></dd>
+                                <dd><a href="#">바디트래킹</a></dd>
+                                <dd><a href="#">복합연동</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl class="gnb_sub_menu_list">
+                                <dt>뉴스</dt>
+                                <dd><a href="#">이슈</a></dd>
+                                <dd><a href="#">제품소식</a></dd>
+                                <dd><a href="#">블로그</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl class="gnb_sub_menu_list">
+                                <dt>견적/문의</dt>
+                                <dd><a href="#">견적문의</a></dd>
+                                <dd><a href="#">제품 조합해보기</a></dd>
+                                <dd><a href="#">상시채용</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <ul class="sub_menu">
+                        <li><a href="#">KR</a></li>
+                        <li><a href="#">EN</a></li>
+                        <li><a href="#">CH</a></li>
+                        <li><a href="#">JP</a></li>
+                        <li><a href="#">로그인</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div id="visual">
+                <div class="imgbox">
+                    <img src="images/visual01.png" alt="1">
+                    <img src="images/visual02.png" alt="2">
+                    <img src="images/visual03.png" alt="3">
+                </div>
+                <h2 class="visual_main_title">JOB TRAINNING<br>WITH VR AR</h2>
+                <p class="visual_sub_title">가상증강현실을 통한 직무교육</p>
+                <a href="#" id="top_view_btn">View More <i class="fas fa-arrow-right"></i></a>
+                <ul class="imgIndexBtn">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+        </div>
+        <div id="content">
+            <h3 class="content_main_title">We are a XR<br> Solution Planner</h3>
+            <p class="content_sub_title">우리는 VR,AR,MR 모두를 아우르는 XR(확장현실) 분야<br>
+               최고의 사용자 중심 XR 솔루션 플래너입니다.</p>
+            <section class="field_box inner clear">
+                <div class="field_list">
+                    <img src="images/contents_icon.jpg" alt="contents_icon">
+                    <h4>Contents</h4>
+                    <p>산업안전, 직무훈련, 의료, 교육 등 다양한 분야의 XR 콘텐츠 보유 및 주문 제작</p>
+                </div>
+                <div class="field_list">
+                    <img src="images/hardware_icon.jpg" alt="hardware_icon">
+                    <h4>Hardware</h4>
+                    <p>사용자 환경과 콘텐츠 특성을 고려한 XR 하드웨어 컨설팅 및 제작</p>
+                </div>
+                <div class="field_list">
+                    <img src="images/space_icon.jpg" alt="space_icon">
+                    <h4>Space</h4>
+                    <p>축적된 XR 기술 노하우를 바탕으로 훈련 효율성을 극대화한 공간 디자인</p>
+                </div>
+                <div class="field_list">
+                    <img src="images/platform_icon.jpg" alt="platform_icon">
+                    <h4>Platform</h4>
+                    <p>모든 XR훈련 프로세스를 하나의 SW로<br> 관리하는 XRstudio</p>
+                </div>
+            </section>
+            <a href="#" class="bottom_view_btn">VIEW MORE <i class="fas fa-arrow-right"></i></a>
+            <hr>
+            <div class="product_inform_box">
+                <h1>가치를 창출하는 제품</h1>
+                <div class="product01 clear">
+                    <div id="product01_img">
+                        <img src="images/product01.jpg" alt="1" id="ssoh">
+                    </div>
+                    <div id="product01_desc">
+                        <h4>PRODUCT 01</h4>
+                        <h1>SAFELINE</h1>
+                        <h2>맞춤혐 VR 안전 콘텐츠</h2>
+                        <p>‘세이프라인(SAFELINE) 시리즈’는 엠라인스튜디오가 자체 개발한 콘텐츠 브랜드입니다. 인증된 지적 재산권 및 저작권, 공동저작권을 보유하여 서비스하고 있습니다.</p>
+                        <a href="#">Product Info <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="product02 clear">
+                    <div id="product02_img">
+                        <img src="images/product02.jpg" alt="2" id="ssoh">
+                    </div>
+                    <div id="product02_desc">
+                        <h4>PRODUCT 02</h4>
+                        <h1>VR</h1>
+                        <h1>CARRIER</h1>
+                        <h2>집체 교육용 무선 VR 패키지</h2>
+                        <p>‘VR 캐리어(VR CARRIER)’는 엠라인스튜디오의 무선 VR 교육 패키지 입니다. ‘VR 캐리어(VR CARRIER)’는 기존의 어렵고 번거롭던 VR 교육을 쉽고 편리하게 만들어줍니다.</p>
+                        <a href="#">Product Info <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="news_inform clear">
+                <h1>비전을 제시할 뉴스</h1>
+                <div class="news_box01">
+                    <img alt="">
+                    <p class="news_con"></p>
+                    <p class="pub_date"></p>
+                </div>
+                <div class="news_box02">
+                    <img alt="">
+                    <p class="news_con"></p>
+                    <p class="pub_date"></p>
+                </div>
+                <div class="news_box03">
+                    <img alt="">
+                    <p class="news_con"></p>
+                    <p class="pub_date"></p>
+                </div>
+                <div class="news_box04">
+                    <img alt="">
+                    <p class="news_con"></p>
+                    <p class="pub_date"></p>
+                </div>
+                <div class="news_box05">
+                    <img alt="">
+                    <p class="news_con"></p>
+                    <p class="pub_date"></p>
+                </div>
+                <div class="news_box06">
+                    <img alt="">
+                    <p class="news_con"></p>
+                    <p class="pub_date"></p>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="inner clear">
+                <div class="address">
+                    <dl>
+                        <dt><img src="images/footer_logo.png" alt=""></dt>
+                        <dd>M-Line STUDIO Inc.</dd>
+                        <dd>서울특별시 강남구 강남대로 122길 39-9.</dd>
+                        <dd>JS 빌딩 3-5층(06114)</dd>
+                    </dl>
+                </div>
+                <div class="follow">
+                    <h3>FOLLOW US</h3>
+                    <ul class="clear">
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+                        <li><a href="#"><i class="fab fa-blogger-b"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                    </ul>
+                </div>
+                <div class="download">
+                    <h3>DOWNLOAD</h3>
+                    <ul>
+                        <li><a href="#"><span id="download01">엠라인 스튜디오 회사소개서 <i class="fas fa-download"></i></span></a></li>
+                        <li><a href="#"><span id="download02">세이프라인 카탈로그 <i class="fas fa-dwnload"></i></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>Copyright &copy; 2021-M-line Studio. All rights reserved</p>
+            </div>
+        </footer>
+    </div>
+    <a href="#wrap" id="top_button">
+        <i class="fas fa-arrow-circle-up"></i>
+    </a>
+</body>
+</html>

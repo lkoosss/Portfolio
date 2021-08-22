@@ -1,0 +1,8 @@
+[
+    {"id":1,"image_src":"news_img1.jpg","news_con":"[디지털데일리] “위험한현장 투입전에 VR로 미리 체험, 확실히 도움된다”…건설·중공업계 혁신","pub_date":"2021년 6월 1일"},
+    {"id":2,"image_src":"news_img2.jpg","news_con":"[연합뉴스_이효석의 게임인] 하반신 장애인이 VR게임을 하자 벌어진 놀라운 일","pub_date":"2020년 12월 22일"},
+    {"id":3,"image_src":"news_img3.jpg","news_con":"[엠라인스튜디오] “가상 체험형 안전 교육 시스템” 특허 등록","pub_date":"2020년 12월 22일"},
+    {"id":4,"image_src":"news_img4.jpg","news_con":"[정보통신신문] “산재 줄이자”…HMD · 무선기술 융합 콘텐츠 개발 ‘박차’","pub_date":"2020년 12월 4일"},
+    {"id":5,"image_src":"news_img5.jpg","news_con":"[한국중부발전] 대·중소 해외 동반진출 지원사업, 엠라인스튜디오 선정","pub_date":"2020년 5월 12일"},
+    {"id":6,"image_src":"news_img6.jpg","news_con":"엠라인스튜디오, 휴대성과 가격경쟁력 확보한 교육시스템 VR-Carrier(가칭) 출시","pub_date":"2020년 5월 3일"}
+]
