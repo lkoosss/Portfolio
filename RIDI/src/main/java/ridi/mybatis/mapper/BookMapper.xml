@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ridi.mybatis.mapper.BookMapper">
+	<!-- 책 판매 삽입 -->
+	<insert id="insertBook" parameterType="BookDto">
+		INSERT INTO BOOK VALUES(
+									SEQ_BOOK.NEXTVAL,
+									#{book_Name},
+									#{price},
+									#{stock},
+									#{star_Rating},
+									#{estimated_Time},
+									#{shipping_Price},
+									#{category},
+									#{publication_Date},
+									#{pages},
+									#{author},
+									#{book_Intro},
+									#{book_Image},
+									#{book_RealImage},
+									'0'
+									)
+	</insert>
+	
+	<!-- 책 리스트 출력 -->
+	<select id="getAllBook" resultType="BookDto">
+		SELECT * FROM BOOK ORDER BY NO DESC
+	</select>
+		
+	<!-- 책 info 페이지 출력 -->
+	<select id="getOneBook" parameterType="Integer" resultType="BookDto">
+		SELECT * FROM BOOK WHERE NO = #{no}
+	</select>
+	
+	
+	<!-- 책 수정 페이지 출력 -->
+	<update id="modifyBook" parameterType="BookDto">
+		UPDATE BOOK SET BOOK_NAME = #{book_Name},
+						PRICE = #{price},
+						STOCK = #{stock},
+						ESTIMATED_TIME = #{estimated_Time},
+						SHIPPING_PRICE = #{shipping_Price},
+						CATEGORY = #{category},
+						PAGES = #{pages},
+						AUTHOR = #{author},
+						BOOK_INTRO = #{book_Intro},
+						BOOK_IMAGE = #{book_Image},
+						BOOK_REALIMAGE = #{book_RealImage}
+						WHERE NO = #{no}
+	</update>
+	
+	<!-- 책 삭제  -->
+	<delete id="deleteBook" parameterType="Integer">
+		DELETE FROM BOOK WHERE NO = #{no}
+	</delete>
+	
+	<!-- 메인 페이지 -->
+	
+	
+	<!-- 메인 슬라이더 페이지 출력 -->
+	<select id="getAdvSlider" resultType="BookDto">
+		SELECT * FROM BOOK WHERE CATEGORY = 'mainadv' ORDER BY NO DESC
+	</select>
+	
+	<!-- 오성식 추가 -->
+	<!-- 베스트셀러 9개 책 출력 -->
+	<select id="getBestSeller" resultType="BookDto">
+		SELECT * FROM (SELECT B.*, ROWNUM FROM (SELECT * FROM BOOK ORDER BY STAR_RATING DESC) B) WHERE ROWNUM <![CDATA[<]]>= 9
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="infoCount" parameterType="Integer">
+		UPDATE BOOK SET COUNT = COUNT + 1 WHERE NO = #{no}
+	</update>
+	<!-- 조회수 많은 책 9개 출력 -->
+	<select id="getPopBook" resultType="BookDto">
+		SELECT * FROM 
+		(SELECT BOOK_NAME, NO, BOOK_IMAGE, AUTHOR, COUNT, ROW_NUMBER()OVER (ORDER BY COUNT DESC) AS RNK
+		 FROM BOOK) 
+		WHERE RNK <![CDATA[<]]>= 9 AND ROWNUM <![CDATA[<]]>= 9
+	</select>
+	
+	<!-- 신작 슬라이더 페이지 출력 -->
+	<select id="getNewBook" resultType="BookDto">
+		SELECT * FROM BOOK 
+							WHERE 
+							PUBLICATION_DATE <![CDATA[>]]> SYSDATE - (INTERVAL '63' DAY) 
+							AND CATEGORY NOT IN('mainadv') 
+							ORDER BY PUBLICATION_DATE DESC
+	</select>
+	
+	<!-- 재태크 페이지 -->
+	
+	<!-- 재태크페이지 베스트셀러 슬라이더 출력(아직 미설계, sql 수정해야함) -->
+	<select id="getMoneyBestSlider" resultType="BookDto">
+		SELECT * FROM BOOK WHERE CATEGORY = 'mainadv' ORDER BY NO DESC
+	</select>
+	
+	<!-- 재태크페이지 현재시간, 사람들이 많이 읽고있는 페이지 출력 (오성식 수정) -->
+	<select id="getMoneyTimeBook" resultType="BookDto">
+		SELECT * FROM (SELECT B.*,ROWNUM FROM (SELECT * FROM BOOK WHERE CATEGORY = '재태크' ORDER BY COUNT DESC) B ) WHERE ROWNUM <![CDATA[<=]]> 9
+	</select>
+	
+	<!-- 재태크페이지 리디추천 출력 (아직 미설계, sql 수정해야함)-->
+	<select id="getMoneyRecomBook" resultType="BookDto">
+		SELECT * FROM (SELECT B.*, ROWNUM FROM (SELECT * FROM BOOK WHERE CATEGORY = '재태크' ORDER BY STAR_RATING DESC) B) WHERE ROWNUM <![CDATA[<=]]> 12
+	</select>
+	
+	<!-- 만화 페이지 -->
+	
+	<!-- 만화 페이지 베스트셀러 슬라이더 출력( sql 수정해야함) -->
+	<select id="getComicBestSlider" resultType="BookDto">
+		SELECT * FROM BOOK WHERE CATEGORY = 'mainadv' ORDER BY NO DESC
+	</select>
+	
+	<!-- 만화 페이지 현재시간, 사람들이 많이 읽고있는 페이지 출력  -->
+	<select id="getComicTimeBook" resultType="BookDto">
+		SELECT * FROM (SELECT B.*,ROWNUM FROM (SELECT * FROM BOOK WHERE CATEGORY = '만화' ORDER BY COUNT DESC) B ) WHERE ROWNUM <![CDATA[<=]]> 9
+	</select>
+	
+	<!-- 만화 페이지 리디추천 출력 (아직 미설계, sql 수정해야함)-->
+	<select id="getComicRecomBook" resultType="BookDto">
+		SELECT * FROM (SELECT B.*, ROWNUM FROM (SELECT * FROM BOOK WHERE CATEGORY = '만화' ORDER BY STAR_RATING DESC) B) WHERE ROWNUM <![CDATA[<=]]> 12
+	</select>
+	
+	<!-- 에세이 페이지 -->
+	
+	<!-- 에세이 페이지 베스트셀러 슬라이더 출력( sql 수정해야함) -->
+	<select id="getEssayBestSlider" resultType="BookDto">
+		SELECT * FROM BOOK WHERE CATEGORY = 'mainadv' ORDER BY NO DESC
+	</select>
+	
+	<!-- 에세이 페이지 현재시간, 사람들이 많이 읽고있는 페이지 출력  -->
+	<select id="getEssayTimeBook" resultType="BookDto">
+		SELECT * FROM (SELECT B.*,ROWNUM FROM (SELECT * FROM BOOK WHERE CATEGORY = '에세이' ORDER BY COUNT DESC) B ) WHERE ROWNUM <![CDATA[<=]]> 9
+	</select>
+	
+	<!-- 에세이 페이지 리디추천 출력 (아직 미설계, sql 수정해야함)-->
+	<select id="getEssayRecomBook" resultType="BookDto">
+		SELECT * FROM (SELECT B.*, ROWNUM FROM (SELECT * FROM BOOK WHERE CATEGORY = '에세이' ORDER BY STAR_RATING DESC) B) WHERE ROWNUM <![CDATA[<=]]> 12
+	</select>
+	
+</mapper>

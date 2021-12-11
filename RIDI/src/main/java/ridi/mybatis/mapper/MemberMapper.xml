@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ridi.mybatis.mapper.MemberMapper">
+	
+	<!-- 회원정보를 DB에 새로저장 -->
+	<insert id="insertMember" parameterType="MemberDto">
+		INSERT INTO MEMBER VALUES(
+									SEQ_MEMBER.NEXTVAL,
+									#{name},
+									#{RRN},
+									#{id},
+									#{password},
+									#{email},
+									#{gender},
+									#{zipcode},
+									#{address},
+									#{hp},
+									SYSDATE,
+									1000000)
+	</insert>
+	
+	<!-- ID가 일치하는 회원정보 반환 -->
+	<select id="getLoggedMember" resultType="MemberDto">
+		SELECT * FROM MEMBER WHERE ID = #{id}
+	</select>
+	
+	<!-- 변경된 회원 정보를 DB에 업데이트 -->
+	<update id="modifyMember" parameterType="MemberDto">
+		UPDATE MEMBER SET HP = #{hp}, 
+						  PASSWORD = #{password}, 
+						  ZIPCODE = #{zipcode}, 
+						  ADDRESS = #{address} 
+						  								WHERE ID = #{id}
+	</update>
+	
+	<!-- 변경된 회원 정보를 DB에 업데이트(패스워드 제외) -->
+	<update id="modifyMemberNotPw" parameterType="MemberDto">
+		UPDATE MEMBER SET HP = #{hp},
+						  ZIPCODE = #{zipcode}, 
+						  ADDRESS = #{address} 
+						  								WHERE ID = #{id}
+	</update>
+	
+	<!-- 회원정보를 DB에서 삭제 -->
+	<delete id="deleteMember" parameterType="MemberDto">
+		DELETE FROM MEMBER WHERE ID = #{id}
+	</delete>
+	
+	<!-- 회원의 암호화된 PW를 반환 -->
+	<select id="getMemberPassword" parameterType="MemberDto" resultType="string">
+		SELECT PASSWORD FROM MEMBER WHERE ID = #{id}
+	</select>
+	
+	<!-- ID를 찾고 있으면 해당 ID반환 -->
+	<select id="idDuplicationCheck" resultType="MemberDto">
+		SELECT ID FROM MEMBER WHERE ID = #{id}
+	</select>
+	
+	<!-- ID를 찾고 있으면 해당 ID 중 앞 2글자만 보여주고 나머지 *처리 하고 반환 -->
+	<select id="memberFindId" resultType="MemberDto">
+		SELECT RPAD(SUBSTR(ID,1,2),LENGTH(ID),'*') AS ID FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- 임시 비밀번호를 DB에 저장 -->
+	<update id="memberFindPw" parameterType="MemberDto">
+		UPDATE MEMBER SET PASSWORD = #{password} WHERE ID = #{id} AND EMAIL = #{email}
+	</update>
+	
+	<!--  결제한 금액만큼 캐시를 차감하고 member 세션을 다시받는다. -->
+	<update id="minusCash" parameterType="MemberDto">
+		UPDATE MEMBER SET CASH = (SELECT CASH - #{minusCash} FROM MEMBER WHERE ID = #{id}) WHERE ID = #{id}
+	</update>
+	
+	<!-- id에 해당하는 유저정보를 반환한다 -->
+	 <select id="getOneMember" parameterType="MemberDto" resultType="MemberDto">
+	 	SELECT * FROM MEMBER WHERE ID = #{id}
+	 </select>
+</mapper>
+
+
+
+
+
+

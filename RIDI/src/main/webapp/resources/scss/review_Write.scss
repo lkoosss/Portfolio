@@ -1,0 +1,28 @@
+#star{
+  width:170px;
+  display: flex;
+  justify-content: space-between;
+}
+a{margin:0; padding:0;}
+
+table{
+  thead{
+    th{
+      padding:20px;
+      background-color: #303538;
+      color:#ddd;
+    }
+  }
+
+  tbody{
+    .reviewInfo{
+      text-align: center;
+      td{
+        background-color: #ddd;
+      }
+      #starScore*{
+        color:red;
+      }
+    }
+  }
+}

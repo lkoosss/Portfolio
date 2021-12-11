@@ -1,0 +1,97 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+span.red { color: red; }
+
+body { font-family: "IBM Plex Sans KR", sans-serif; }
+
+main { min-height: 60vh; }
+
+a { text-decoration: none; color: inherit; }
+
+li { list-style: none; }
+
+#header .container { width: 100%; background: #000; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 50px; }
+
+#header .container nav ul { display: flex; }
+
+#header .container nav ul li a { display: block; padding: 0 20px; font-size: 18px; }
+
+#footer { background: #000; color: #fff; padding: 50px 0; display: flex; justify-content: center; text-transform: uppercase; }
+
+#contents { padding: 100px 0; }
+
+.contentsTitle { text-align: center; font-size: 36px; font-weight: 500; }
+
+.contentsTitle:after { content: ""; display: block; width: 50px; height: 5px; background-color: #0278af; border-radius: 100px; margin: 50px auto; }
+
+table { border: none; border-collapse: collapse; border-top: 1px solid #999; width: 100%; }
+
+.form { width: 1000px; margin: 0  auto; }
+
+.form.wide { width: 1000px; }
+
+.form table.tdLeft td { text-align: left; }
+
+.form tbody td { text-align: center; }
+
+.form tbody td.left { text-align: left; }
+
+.form tbody td textarea { width: 100%; min-height: 400px; resize: none; text-align: left; }
+
+.form tbody td span.indent1 { margin-left: 30px; }
+
+.form tbody td span.indent2 { margin-left: 60px; }
+
+.form tbody td span.indent3 { margin-left: 90px; }
+
+.form tbody td span.indent4 { margin-left: 120px; }
+
+.form tbody tr .faqSubjects:hover { cursor: pointer; }
+
+.form thead th { background-color: #f8f8f8; }
+
+.form thead th.left { text-align: left; }
+
+.form td, .form th { padding: 10px; border: none; border-bottom: 1px solid #999; }
+
+.form th { background-color: #f8f8f8; font-weight: 400; }
+
+.form input[type="text"], .form input[type="password"], .form input[type="number"], .form input[type="button"], .form select { border: 1px solid #d9d9d9; padding: 10px; min-width: 400px; }
+
+.form input[type="text"]:hover, .form input[type="password"]:hover, .form input[type="number"]:hover, .form input[type="button"]:hover, .form select:hover { cursor: pointer; }
+
+.form input[type="button"] { background-color: #000; border-radius: 5px; color: #fff; width: 80px; min-width: 80px; }
+
+.form td div { margin: 5px 0; }
+
+.form .short { width: 150px; min-width: 150px !important; }
+
+.form td .txtPass { font-size: 12px; color: #002bb9; }
+
+.form td .txtPass.red { color: #aa020a; }
+
+.btns > * { display: inline-block; }
+
+.btns.center { text-align: center; }
+
+.btns { margin-top: 100px; display: flex; justify-content: center; align-items: center; }
+
+.btns input[type="submit"], .btns input[type="button"], .btns input[type="reset"], .btns input[type="button"], .btns button, .btns a { width: 150px; height: 60px; display: inline-flex; justify-content: center; align-items: center; background: #000; color: #fff; border-radius: 10px; border: none; margin: 0 5px; }
+
+.btns input[type="submit"]:hover, .btns input[type="button"]:hover, .btns input[type="reset"]:hover, .btns input[type="button"]:hover, .btns button:hover, .btns a:hover { cursor: pointer; }
+
+.paginationBox { margin-top: 50px; }
+
+.paginationBox ul { display: flex; justify-content: center; }
+
+.paginationBox ul li.active a { background-color: #03acd6; }
+
+.paginationBox ul li a { display: flex; justify-content: center; align-items: center; width: 30px; height: 30px; background-color: #111; color: #fff; border-radius: 3px; margin: 0 3px; }
+
+.searchForm { background: #f8f8f8; padding: 50px 0; display: flex; justify-content: center; border: 1px solid #ccc; margin-top: 50px; }
+
+.searchForm .searchSelect { min-width: 200px; width: 200px; }
+
+.searchForm .btn { height: 45px; width: 120px; margin-left: 10px; background: #000; color: #fff; }
+
+.searchForm .btn:hover { cursor: pointer; }

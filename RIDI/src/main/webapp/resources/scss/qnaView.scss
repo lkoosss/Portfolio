@@ -1,0 +1,215 @@
+//qna_View page 
+.qnaView_body {
+    height: 100%;
+    .qna_View {
+        width: 1200px;
+        margin: 0 auto;
+        .qnaView_form {
+            position: relative;
+            .qnaView_container {
+                .qnaView_inner {
+                    li {
+                        display: flex;
+                        &:first-child {
+                            font-size: 18px;
+                            font-weight: bold;
+                            width: 1200px;
+                            color: #1f8ce6;
+                            border-bottom: 1px solid #d1d5d9;
+                            border-top: 2px solid #aabdcc;
+                            margin-top: 60px;
+                            div {
+                                &:first-child {
+                                    width: 200px;
+                                    text-align: center;
+                                    padding: 10px 0;
+                                    background-color: #f7f7f7;
+                                    
+                                }
+                                &:nth-child(2) { 
+                                    margin-top: 7px;
+                                    margin-left: 10px;
+                                }
+                            }
+                           
+                        }
+                        &:nth-child(2) {
+                            width: 396px;
+                            float: right;
+                            font-weight: bold;
+                            margin-left: 10px;
+                            font-size: 14px;
+                            div {
+                                &:first-child {
+                                    width: 200px;
+                                    text-align: center;
+                                    padding: 10px 0;
+                                    background-color: #f7f7f7;
+                                }
+                                &:nth-child(2) {
+                                    margin-top: 7px;
+                                    margin-left: 10px;
+                                }
+                            }
+                        
+                        }
+                        &:nth-child(3) {
+                            width: 397px;
+                            float: right;
+                            font-weight: bold;
+                            font-size: 14px;
+                            div {
+                                &:first-child {
+                                    width: 200px;
+                                    text-align: center;
+                                    padding: 10px 0;
+                                    background-color: #f7f7f7;
+                                }
+                                &:nth-child(2) {
+                                    margin-top: 7px;
+                                    margin-left: 10px;
+                                }
+                            }
+                        }
+                        &:nth-child(4) {
+                            width: 397px;
+                            float: right;
+                            font-weight: bold;
+                            font-size: 14px;
+                            div {
+                                &:first-child {
+                                    width: 200px;
+                                    text-align: center;
+                                    padding: 10px 0;
+                                    background-color: #f7f7f7;
+                                }
+                                &:nth-child(2) {
+                                    margin-top: 7px;
+                                    margin-left: 10px;
+                                }
+                            }
+                        }
+                        &:last-child {
+                            width: 1200px;
+                            height: 200px;
+                            border-bottom: 2px solid #d1d5d9;
+                            border-top: 1px solid #d1d5d9;
+                            font-size: 15px;
+                            div {
+                               &:first-child {
+                                width: 200px;
+                                text-align: center;
+                                padding: 10px 0;
+                                background-color: #f7f7f7;
+                               } 
+                               &:nth-child(2) {
+                                margin-top: 7px;
+                                margin-left: 10px;
+                               }
+                            }
+                        }
+                        div {
+                           
+                            &:nth-child(2) {margin-left: 3px;}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.bottomContent{
+    display: flex;
+    .prevAndNext {
+        padding-top: 50px;
+        height: 70vh;
+        width: 16%;
+        //float: left;
+        span { 
+            font-weight: bold;
+           
+        }
+    }
+    
+    .qnaView_btn {
+        //position: relative;
+        width: 83%;
+        margin: 0;
+        height: 70vh;
+        a {
+          
+            border: 1px solid #1f8ce6;
+            height: 30px;
+            border-radius: 5px;
+            padding: 5px 10px;
+            line-height: 30px;
+            position: absolute;
+            
+            &:nth-child(4) {
+                margin-left: 70px;
+                margin-top: 55px;
+                background-color: #1F8CE6;
+                color: #fff;
+                font-weight: bold;
+            }
+    
+            &:nth-child(5) {
+                margin-left: 10px;
+                margin-top: 55px;
+                color: #1F8CE6;
+            }
+        }
+    }
+
+}
+
+
+.replyBox {
+    width: 813px;
+    background-color: #f7f7f7;
+    margin-top: 34px;
+    float: left;
+    height: 60px;
+    padding: 22px 10px 0 20px;
+    textarea { width: 720px;}
+    button {
+        float: right;
+        width: 80px;
+        padding: 7px 0;
+    }
+}
+.txtCount {
+    width: 100px;
+    position: absolute;
+    margin-left: 1010px;
+    margin-top: 95px;
+    font-size: 13px;
+    span {
+        display: inline-block;
+    }
+}
+.replyList {
+    .list {
+        li { 
+            width: 813px;
+            float: left;
+            display: flex;
+            height: 30px;
+            padding: 10px 15px 0 15px;
+            margin-right: 100px;
+            border-bottom: 2px solid #aabdcc;
+            div {
+                width: 750px;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            button {
+                margin-left: 260px;
+                width: 60px;
+                font-size: 5px;
+                height: 20px;
+            }
+        }
+    }
+}

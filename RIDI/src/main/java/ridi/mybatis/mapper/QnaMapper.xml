@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ridi.mybatis.mapper.QnaMapper">
+	
+	<!-- 게시글  -->
+	<insert id="insertQna" parameterType="QnaDto">
+		INSERT INTO QNA VALUES (
+							SEQ_QNA.NEXTVAL,
+							#{writerId},
+							#{subject},
+							#{password},
+							SYSDATE,
+							0,
+							#{contents})
+		
+	</insert>
+	
+	<select id="getAllList" parameterType="HashMap" resultType="QnaDto">
+		SELECT * FROM (SELECT B.*,ROWNUM AS NUM FROM ( SELECT * FROM QNA ORDER BY NO DESC  ) B	) 
+		WHERE NUM  <![CDATA[>=]]>  #{start} AND NUM  <![CDATA[<]]> #{end}
+	</select>
+
+	 <select id="getTotal" resultType="Integer" >
+	 		SELECT COUNT(*) AS TOTAL FROM QNA
+	 </select>
+	 
+	 <update id="updateReadCount" parameterType="Integer">
+	 	UPDATE QNA SET READCOUNT = 
+		READCOUNT + 1 WHERE NO = #{no}
+	 </update>
+	 
+	 <select id="getQnaSelectOne" parameterType="Integer" resultType="QnaDto">
+	 	SELECT * FROM QNA WHERE NO = #{no}
+	 </select>
+	 
+	 <select id="prevQnaDto" parameterType="Integer" resultType="QnaDto">
+	 	SELECT * FROM (SELECT B.*,ROWNUM AS NUM FROM 
+						( SELECT * FROM QNA ORDER BY NO DESC) B)
+					WHERE NUM = #{num} + 1
+	 </select>
+	 
+	 <select id="nextQnaDto" parameterType="Integer" resultType="QnaDto">
+	 	SELECT * FROM (SELECT B.*,ROWNUM AS NUM FROM 
+						( SELECT * FROM QNA ORDER BY NO DESC) B)
+					WHERE NUM = #{num} - 1
+	 </select>
+	 
+	 <select id="prevSearchQnaDto" parameterType="HashMap" resultType="QnaDto">
+		SELECT * FROM 
+					(SELECT B.*,ROWNUM AS NUM FROM 
+					( SELECT * FROM QNA WHERE 
+					${searchField} LIKE 
+					'%' || #{searchWord} || '%'  ORDER BY NO DESC
+					 ) B )
+				WHERE NUM = #{num} + 1
+	 </select>
+	 
+	 <select id="nextSearchQnaDto" parameterType="HashMap" resultType="QnaDto">
+	 	SELECT * FROM 
+					(SELECT B.*,ROWNUM AS NUM FROM 
+					( SELECT * FROM QNA WHERE 
+					${searchField} LIKE 
+					'%' || #{searchWord} || '%'  ORDER BY NO DESC
+					 ) B )
+				WHERE NUM = #{num} - 1
+	 </select>
+	
+	 <select id="getPassword" parameterType="Integer" resultType="String">
+	 	SELECT PASSWORD FROM QNA WHERE NO = #{no}
+	 </select>
+	 
+	 <delete id="deleteQna" parameterType="QnaDto">
+	 	DELETE FROM QNA WHERE NO = #{no}
+	 </delete>
+	 
+	 <!-- 댓글  -->
+	 <insert id="insertReply" parameterType="ReplyDto">
+		INSERT INTO REPLY VALUES(
+										SEQ_REPLY.NEXTVAL,
+										#{boardId},
+										#{reply}
+										)
+	</insert>
+	<select id="getAllReply" parameterType="Integer" resultType="ReplyDto">
+		SELECT * FROM REPLY WHERE BOARDID = #{boardId} ORDER BY NO DESC
+	</select>
+	
+	<delete id="deleteReply" parameterType="Integer">
+		DELETE FROM REPLY WHERE NO = #{no}
+	</delete>
+	
+	<delete id="deleteAllReply" parameterType="QnaDto" >
+		DELETE FROM REPLY WHERE BOARDID = #{no}
+	</delete>
+	
+	<select id="getReplyCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM REPLY WHERE BOARDID=#{boardId}
+	</select>
+	
+	 <!-- 검색기능 -->
+	 <select id="getSearchAllList" parameterType="HashMap" resultType="QnaDto">
+	 	SELECT * FROM 
+					(SELECT B.*,ROWNUM AS NUM FROM 
+					( SELECT * FROM QNA WHERE 
+					${searchField} LIKE 
+					'%' || #{searchWord} || '%'  ORDER BY NO DESC
+					 ) B )
+				WHERE NUM  <![CDATA[>=]]>  
+				#{start} AND NUM <![CDATA[<]]> #{end}
+	 </select>
+	 
+	 <select id="getSearchTotal" parameterType="HashMap" resultType="Integer">
+	 	SELECT COUNT(*) AS TOTAL FROM 
+		QNA WHERE ${searchField} 
+		LIKE '%' || #{searchWord} || '%' 
+	 </select>
+
+</mapper>

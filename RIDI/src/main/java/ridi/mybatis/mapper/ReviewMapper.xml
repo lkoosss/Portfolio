@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ridi.mybatis.mapper.ReviewMapper">
+	
+	<!--  리뷰를 DB에 저장한다. -->
+	<insert id="reviewWrite" parameterType="ReviewDto">
+		INSERT INTO REVIEW VALUES(SEQ_REVIEW.NEXTVAL, #{book_No},#{contents},#{writer_Id},#{star_Rating},#{password},SYSDATE)
+	</insert>
+	
+	<!-- 리뷰들을 반환한다. -->
+	<select id="getAllReview" parameterType="ReviewDto" resultType="ReviewDto">
+		SELECT * FROM REVIEW WHERE BOOK_NO = #{book_No} ORDER BY NO DESC
+	</select>
+	
+	<!-- 리뷰를 삭제한다. -->
+	<delete id="deleteReview" parameterType="ReviewDto">
+		DELETE FROM REVIEW WHERE NO = #{no}
+	</delete>
+	
+	<!-- BOOK의 평균 별점을 업데이트한다.(BookMapper에 옮겨야함) -->
+	<update id="updateStarRatingAvg" parameterType="ReviewDto">
+		UPDATE BOOK SET STAR_RATING = (SELECT ROUND(AVG(NVL(STAR_RATING,0))) FROM REVIEW WHERE BOOK_NO = #{book_No}) WHERE NO = #{book_No}
+	</update>
+</mapper>
+
+
+
+
